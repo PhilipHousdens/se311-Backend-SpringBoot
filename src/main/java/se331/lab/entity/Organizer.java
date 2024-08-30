@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Organizer {
-    private int id;
-    private String name;
-    private String address;
+    Long id;
+    String name;
+    String address;
 }
