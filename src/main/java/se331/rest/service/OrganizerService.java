@@ -1,6 +1,6 @@
-package se331.lab.service;
+package se331.rest.service;
 
-import se331.lab.entity.Organizer;
+import se331.rest.entity.Organizer;
 
 import java.util.List;
 

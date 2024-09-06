@@ -1,4 +1,4 @@
-package se331.lab;
+package se331.rest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

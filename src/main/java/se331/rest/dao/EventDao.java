@@ -1,6 +1,6 @@
-package se331.lab.dao;
+package se331.rest.dao;
 
-import se331.lab.entity.Event;
+import se331.rest.entity.Event;
 
 import java.util.List;
 

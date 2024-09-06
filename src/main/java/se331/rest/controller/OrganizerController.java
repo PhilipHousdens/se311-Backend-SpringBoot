@@ -1,7 +1,5 @@
-package se331.lab.rest.controller;
+package se331.rest.controller;
 
-
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,33 +9,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
-import se331.lab.entity.Event;
-import se331.lab.service.EventService;
+import se331.rest.entity.Organizer;
+import se331.rest.service.OrganizerService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class EventController {
-    final EventService eventService;
-    @GetMapping("events")
-    public ResponseEntity<List<Event>> getEventLists(@RequestParam(value = "_limit", required = false) Integer perPage, @RequestParam(value = "_page", required = false) Integer page) {
-        List<Event> output = null;
-        Integer eventSize = eventService.getEventSize();
+public class OrganizerController {
+    final OrganizerService organizerService;
+
+    @GetMapping("organizers")
+    public ResponseEntity<List<Organizer>> getOrganizer(@RequestParam(value = "_limit", required = false) Integer perPage, @RequestParam(value = "_page", required = false) Integer page) {
+        List<Organizer> output = null;
+        Integer organizerSize = organizerService.getOrganizerSize();
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("x-total-count", String.valueOf(eventSize));
+        responseHeaders.set("x-total-count", String.valueOf(organizerSize));
         try {
-            output = eventService.getEvents(perPage, page);
+            output = organizerService.getOrganizers(perPage, page);
         } catch (IndexOutOfBoundsException ex) {
             return new ResponseEntity<>(output, responseHeaders, HttpStatus.OK);
         }
         return new ResponseEntity<>(output, responseHeaders, HttpStatus.OK);
     }
 
-    @GetMapping("events/{id}")
-    public ResponseEntity<?> getEvent(@PathVariable Long id) {
-       Event output = eventService.getEvent(id);
+    @GetMapping("organizers/{id}")
+    public ResponseEntity<?> getOrganizer(@PathVariable Long id) {
+        Organizer output = organizerService.getOrganizer(id);
         if (output != null) {
             return ResponseEntity.ok(output);
         }else {
@@ -45,4 +43,3 @@ public class EventController {
         }
     }
 }
-

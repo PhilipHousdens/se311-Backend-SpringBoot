@@ -1,4 +1,4 @@
-package se331.lab.entity;
+package se331.rest.entity;
 
 import lombok.Builder;
 import lombok.Data;

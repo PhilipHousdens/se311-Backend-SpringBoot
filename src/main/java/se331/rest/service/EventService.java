@@ -1,6 +1,6 @@
-package se331.lab.service;
+package se331.rest.service;
 
-import se331.lab.entity.Event;
+import se331.rest.entity.Event;
 
 import java.util.List;
 
