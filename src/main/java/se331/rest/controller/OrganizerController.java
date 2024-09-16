@@ -1,6 +1,7 @@
 package se331.rest.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +22,10 @@ public class OrganizerController {
 
     @GetMapping("organizers")
     public ResponseEntity<List<Organizer>> getOrganizer(@RequestParam(value = "_limit", required = false) Integer perPage, @RequestParam(value = "_page", required = false) Integer page) {
-        List<Organizer> output = null;
-        Integer organizerSize = organizerService.getOrganizerSize();
+        Page<Organizer> output = organizerService.getOrganizers(perPage, page);
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("x-total-count", String.valueOf(organizerSize));
-        try {
-            output = organizerService.getOrganizers(perPage, page);
-        } catch (IndexOutOfBoundsException ex) {
-            return new ResponseEntity<>(output, responseHeaders, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(output, responseHeaders, HttpStatus.OK);
+        responseHeaders.set("x-total-count", String.valueOf(output.getTotalElements()));
+        return new ResponseEntity<>(output.getContent(), responseHeaders, HttpStatus.OK);
     }
 
     @GetMapping("organizers/{id}")

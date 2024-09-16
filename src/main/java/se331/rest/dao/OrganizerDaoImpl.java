@@ -1,18 +1,22 @@
 package se331.rest.dao;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import se331.rest.entity.Event;
 import se331.rest.entity.Organizer;
+import se331.rest.repository.OrganizerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Profile("manual")
 public class OrganizerDaoImpl implements OrganizerDao {
+    private OrganizerRepository organizerRepository;
     List<Organizer> organizers;
 
 
@@ -71,5 +75,10 @@ public class OrganizerDaoImpl implements OrganizerDao {
     @Override
     public Organizer getOrganizer(Long id) {
         return organizers.stream().filter(o -> o.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    @Override
+    public Organizer save(Organizer organizer) {
+        return organizerRepository.save(organizer);
     }
 }
