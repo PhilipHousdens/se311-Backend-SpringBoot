@@ -1,7 +1,11 @@
 package se331.rest.dao;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
+import se331.rest.entity.Event;
 import se331.rest.entity.Organizer;
 
 import java.util.ArrayList;
@@ -57,11 +61,11 @@ public class OrganizerDaoImpl implements OrganizerDao {
     public Integer getOrganizerSize() {return organizers.size();}
 
     @Override
-    public List<Organizer> getOrganizers(Integer pageSize, Integer page) {
+    public Page<Organizer> getOrganizers(Integer pageSize, Integer page) {
         pageSize = pageSize == null ? organizers.size() : pageSize;
         page = page == null ? 1 : page;
         int firstIndex = (page - 1) * pageSize;
-        return organizers.subList(firstIndex, firstIndex + pageSize);
+        return new PageImpl<Organizer>(organizers.subList(firstIndex, firstIndex + pageSize), PageRequest.of(page, pageSize), organizers.size());
     }
 
     @Override
