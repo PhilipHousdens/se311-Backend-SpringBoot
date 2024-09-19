@@ -6,11 +6,15 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import se331.rest.entity.Event;
+import se331.rest.entity.Organizer;
 import se331.rest.repository.EventRepository;
+import se331.rest.repository.OrganizerRepository;
+
 @Component
 @RequiredArgsConstructor
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     final EventRepository eventRepository;
+    final OrganizerRepository organizerRepository;
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         eventRepository.save(Event.builder()
@@ -55,6 +59,26 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .time("10.00am-6.00pm.")
                 .petAllowed(true)
                 .organizer("Chiang Mai Municipality")
+                .build()
+        );
+        organizerRepository.save(Organizer.builder()
+                .name("CAMT")
+                .address("CAMT Building")
+                .build()
+        );
+        organizerRepository.save(Organizer.builder()
+                .name("CMU")
+                .address("CMU Convention hall")
+                .build()
+        );
+        organizerRepository.save(Organizer.builder()
+                .name("Chiang Mai")
+                .address("Ping River")
+                .build()
+        );
+        organizerRepository.save(Organizer.builder()
+                .name("Chiang Mai Municipality")
+                .address("Chiang Mai Moat")
                 .build()
         );
     }

@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import se331.rest.dao.OrganizerDao;
 import se331.rest.entity.Organizer;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class OrganizerServiceImpl implements OrganizerService {
@@ -22,5 +20,10 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Override
     public Organizer getOrganizer(Long id) {
         return organizerDao.getOrganizer(id);
+    }
+
+    @Override
+    public Organizer save(Organizer organizer) {
+        return organizerDao.save(organizer);
     }
 }
