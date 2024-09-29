@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se331.rest.entity.Event;
+import se331.rest.entity.EventDTO;
 import se331.rest.service.EventService;
+import se331.rest.util.LabMapper;
 
 import java.util.List;
 
@@ -18,19 +20,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventController {
     final EventService eventService;
-    @GetMapping("events")
-    public ResponseEntity<List<Event>> getEventLists(@RequestParam(value = "_limit", required = false) Integer perPage, @RequestParam(value = "_page", required = false) Integer page) {
+    @GetMapping("event")
+    public ResponseEntity<?> getEventLists(@RequestParam(value = "_limit", required = false) Integer perPage, @RequestParam(value = "_page", required = false) Integer page) {
         Page<Event> pageOutput = eventService.getEvents(perPage, page);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(pageOutput.getContent(), responseHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(LabMapper.INSTANCE.getEventDto(pageOutput.getContent()), responseHeaders, HttpStatus.OK);
     }
 
     @GetMapping("events/{id}")
     public ResponseEntity<?> getEvent(@PathVariable Long id) {
        Event output = eventService.getEvent(id);
         if (output != null) {
-            return ResponseEntity.ok(output);
+            return ResponseEntity.ok(LabMapper.INSTANCE.getEventDTO(output));
         }else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The given id is not found");
         }
@@ -39,7 +41,7 @@ public class EventController {
     @PostMapping("/events")
     public ResponseEntity<?> addEvent(@RequestBody Event event) {
         Event output = eventService.save(event);
-        return ResponseEntity.ok(output);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getEventDTO(output));
     }
 }
 
