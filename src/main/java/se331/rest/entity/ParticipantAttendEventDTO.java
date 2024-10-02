@@ -1,7 +1,9 @@
 package se331.rest.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventDTO {
+public class ParticipantAttendEventDTO {
     Long id;
     String category;
     String title;
@@ -18,6 +20,5 @@ public class EventDTO {
     String date;
     String time;
     Boolean petAllowed;
-    EventOrganizerDTO organizer;
-    EventParticipantDTO participant;
+    List<Participant> attendEvents;
 }

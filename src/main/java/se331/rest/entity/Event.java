@@ -3,6 +3,7 @@ package se331.rest.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,17 +16,18 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     Long id;
-    String category;
-    String date;
+    String title;
     String description;
     String location;
+    String date;
     String time;
-    String title;
-    Boolean petAllowed;
+    boolean petAllowed;
+    String category;
 
     @ManyToOne
     private Organizer organizer;
 
-    @ManyToMany(mappedBy = "eventHistory")
-    List<Participant> participants;
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    List<EventParticipantDTO> participants = new ArrayList<>();
 }

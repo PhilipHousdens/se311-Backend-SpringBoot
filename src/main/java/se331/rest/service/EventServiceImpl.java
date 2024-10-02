@@ -7,8 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import se331.rest.dao.EventDao;
 import se331.rest.dao.OrganizerDao;
+import se331.rest.dao.ParticipantDao;
 import se331.rest.entity.Event;
 import se331.rest.entity.Organizer;
+import se331.rest.entity.Participant;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class EventServiceImpl implements EventService {
     final EventDao eventDao;
 
     final OrganizerDao organizerDao;
+    final ParticipantDao participantDao;
     @Override
     public Integer getEventSize() {
         return eventDao.getEventSize();

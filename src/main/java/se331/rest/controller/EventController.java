@@ -16,6 +16,7 @@ import se331.rest.util.LabMapper;
 
 import java.util.List;
 
+// Controller for class Event
 @Controller
 @RequiredArgsConstructor
 public class EventController {

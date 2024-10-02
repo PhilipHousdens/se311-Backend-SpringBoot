@@ -3,6 +3,7 @@ package se331.rest.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,11 +19,7 @@ public class Participant {
     String name;
     String telNo;
 
-    @ManyToMany
-    @JoinTable(
-            name = "event_participants",
-            joinColumns = @JoinColumn(name = "participant_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id")
-    )
-    List<Event> eventHistory;
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    List<EventParticipantDTO> eventHistories = new ArrayList<>();
 }

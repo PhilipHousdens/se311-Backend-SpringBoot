@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import se331.rest.service.OrganizerService;
 import se331.rest.util.LabMapper;
 
+// Controller for class Organizer
 @RestController
 @RequiredArgsConstructor
 public class OrganizerController {
