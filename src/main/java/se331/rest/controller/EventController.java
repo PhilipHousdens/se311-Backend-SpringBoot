@@ -38,7 +38,7 @@ public class EventController {
         return new ResponseEntity<>(LabMapper.INSTANCE.getEventDto(pageOutput.getContent()), responseHeaders, HttpStatus.OK);
     }
 
-    @GetMapping("events/{id}")
+    @GetMapping("event/{id}")
     public ResponseEntity<?> getEvent(@PathVariable Long id) {
        Event output = eventService.getEvent(id);
         if (output != null) {
