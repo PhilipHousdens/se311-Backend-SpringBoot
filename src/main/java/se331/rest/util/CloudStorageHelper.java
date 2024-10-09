@@ -24,9 +24,8 @@ public class CloudStorageHelper {
     static {
         InputStream serviceAccount = null;
         try {
-            serviceAccount = new ClassPathResource("KEY_FILE").getInputStream();
-            storage = StorageOptions.newBuilder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount)).setProjectId("PROJECT_ID").build().getService();
+            serviceAccount = new ClassPathResource("compo-lab-work-0bc24be1422b.json").getInputStream();
+            storage = StorageOptions.newBuilder().setCredentials(GoogleCredentials.fromStream(serviceAccount)).setProjectId("compo-lab-work").build().getService();
         } catch (IOException e) {
             e.printStackTrace();
         }
