@@ -33,4 +33,5 @@ build/
 .vscode/
 
 ### Keys ###
-/src/main/resources/compo-lab-work-firebase-adminsdk-uazot-0a7dc28892.json
+.env
+/compo-lab-work-firebase-adminsdk-uazot-0a7dc28892.json

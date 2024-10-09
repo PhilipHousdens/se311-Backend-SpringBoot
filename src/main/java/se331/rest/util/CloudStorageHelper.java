@@ -24,9 +24,9 @@ public class CloudStorageHelper {
     static {
         InputStream serviceAccount = null;
         try {
-            serviceAccount = new ClassPathResource("src/main/resources/compo-lab-work-firebase-adminsdk-uazot-0a7dc28892.json").getInputStream();
+            serviceAccount = new ClassPathResource("KEY_FILE").getInputStream();
             storage = StorageOptions.newBuilder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount)).setProjectId("gs://compo-lab-work.appspot.com").build().getService();
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount)).setProjectId("PROJECT_ID").build().getService();
         } catch (IOException e) {
             e.printStackTrace();
         }
