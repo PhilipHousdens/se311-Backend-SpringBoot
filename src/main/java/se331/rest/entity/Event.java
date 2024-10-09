@@ -30,4 +30,7 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     List<EventParticipantDTO> participants = new ArrayList<>();
+
+    @ElementCollection
+    List<String> images;
 }
