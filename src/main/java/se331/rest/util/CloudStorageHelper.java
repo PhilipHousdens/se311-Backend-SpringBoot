@@ -5,6 +5,7 @@ import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.servlet.ServletException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -22,10 +23,14 @@ import java.util.Date;
 public class CloudStorageHelper {
     private static Storage storage = null;
     static {
+        Dotenv dotenv = Dotenv.load();
+        String credentialKey = dotenv.get("KEY_FILE");
+        String projectId = dotenv.get("PROJECT_ID");
+        System.out.println("Credential key: " + credentialKey);
         InputStream serviceAccount = null;
         try {
-            serviceAccount = new ClassPathResource("imageupload-18a1e-6c69186448fc.json").getInputStream();
-            storage = StorageOptions.newBuilder().setCredentials(GoogleCredentials.fromStream(serviceAccount)).setProjectId("imageupload-18a1e").build().getService();
+            serviceAccount = new ClassPathResource(credentialKey).getInputStream();
+            storage = StorageOptions.newBuilder().setCredentials(GoogleCredentials.fromStream(serviceAccount)).setProjectId(projectId).build().getService();
         } catch (IOException e) {
             e.printStackTrace();
         }

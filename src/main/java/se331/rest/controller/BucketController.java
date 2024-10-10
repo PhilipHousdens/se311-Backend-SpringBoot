@@ -1,5 +1,6 @@
 package se331.rest.controller;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +15,16 @@ import java.io.IOException;
 @Controller
 @RequiredArgsConstructor
 public class BucketController {
+    Dotenv dotenv = Dotenv.load();
+    public String bucketName = dotenv.get("BUCKET_NAME");
     final CloudStorageHelper cloudStorageHelper;
     @PostMapping("/uploadFile")
     public ResponseEntity<?> uploadFile(@RequestParam(value = "file") MultipartFile file) throws IOException, ServletException {
-        return ResponseEntity.ok(this.cloudStorageHelper.getImageUrl(file, "imageupload-18a1e.appspot.com"));
+        return ResponseEntity.ok(this.cloudStorageHelper.getImageUrl(file, bucketName));
     }
 
     @PostMapping("/uploadImage")
     public ResponseEntity<?> upLoadFileComponent(@RequestParam(value = "image") MultipartFile file) throws IOException, ServletException {
-        return ResponseEntity.ok(this.cloudStorageHelper.getStorageFileDto(file, "imageupload-18a1e.appspot.com"));
+        return ResponseEntity.ok(this.cloudStorageHelper.getStorageFileDto(file, bucketName));
     }
 }
