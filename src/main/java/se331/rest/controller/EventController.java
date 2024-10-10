@@ -29,7 +29,7 @@ public class EventController {
         page = page == null ? 1 : page;
         Page<Event> pageOutput;
         if (title == null) {
-            pageOutput = eventService.getEvents(title, PageRequest.of(page-1,perPage));
+            pageOutput = eventService.getEvents(perPage,page);
         } else {
             pageOutput = eventService.getEvents(title, PageRequest.of(page-1,perPage));
         }

@@ -78,7 +78,7 @@ public class CloudStorageHelper {
         // Check extension of file
         if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
             final String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
-            String [] allowedExt = {"jpg", "jpeg", "png", "gif"};
+            String[] allowedExt = {"jpg", "jpeg", "png", "gif"};
             for (String s : allowedExt) {
                 if(extension.equals(s)) {
                     String urlName = this.uploadFile(file, bucket);
