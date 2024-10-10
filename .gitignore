@@ -34,4 +34,4 @@ build/
 
 ### Keys ###
 .env
-/src/main/resources/credential-key.json
+src/main/resources
