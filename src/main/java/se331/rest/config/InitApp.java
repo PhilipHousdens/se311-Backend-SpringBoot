@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import se331.rest.entity.Event;
 import se331.rest.entity.EventParticipantDTO;
@@ -12,6 +14,9 @@ import se331.rest.entity.Participant;
 import se331.rest.repository.EventRepository;
 import se331.rest.repository.OrganizerRepository;
 import se331.rest.repository.ParticipantRepository;
+import se331.rest.security.user.Role;
+import se331.rest.security.user.User;
+import se331.rest.security.user.UserRepository;
 
 import java.util.Arrays;
 
@@ -21,6 +26,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     final EventRepository eventRepository;
     final OrganizerRepository organizerRepository;
     final ParticipantRepository participantRepository;
+    final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -42,6 +48,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         createEvent(org1, "Academic", "Commencement Day", "A time for celebration", "CMU Convention hall", "21th Jan", "8.00am-4.00pm.", false, Arrays.asList(parti1, parti2, parti3, parti4)); // 4 participants
         createEvent(org2, "Cultural", "Loy Krathong", "A time for Krathong", "Ping River", "21th Nov", "8.00am-10.00pm.", false, Arrays.asList(parti2, parti3, parti4)); // 3 participants
         createEvent(org3, "Cultural", "Songkran", "Let's Play Water", "Chiang Mai Moat", "13th April", "10.00am-6.00pm.", true, Arrays.asList(parti1, parti3, parti5)); // 3 participants
+        addUser();
     }
 
     private void createEvent(Organizer organizer, String category, String title, String description, String location, String date, String time, boolean petAllowed, Iterable<Participant> participants) {
@@ -73,5 +80,44 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         // Saving the event
         eventRepository.save(event);
+
+    }
+
+    User user1, user2, user3;
+    private void addUser() {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        user1 = User.builder()
+                .username("admin")
+                .password(encoder.encode("admin"))
+                .firstname("admin")
+                .lastname("admin")
+                .email("admin@admin.com")
+                .enabled(true)
+                .build();
+        user2 = User.builder()
+                .username("user")
+                .password(encoder.encode("user"))
+                .firstname("user")
+                .lastname("user")
+                .email("enabled@user.com")
+                .enabled(true)
+                .build();
+        user3 = User.builder()
+                .username("disableUser")
+                .password(encoder.encode("disableUser"))
+                .firstname("disableUser")
+                .lastname("disableUser")
+                .email("disableUser@user.com")
+                .enabled(false)
+                .build();
+
+        user1.getRoles().add(Role.ROLE_USER);
+        user1.getRoles().add(Role.ROLE_ADMIN);
+
+        user2.getRoles().add(Role.ROLE_USER);
+        user2.getRoles().add(Role.ROLE_USER);
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
     }
 }
