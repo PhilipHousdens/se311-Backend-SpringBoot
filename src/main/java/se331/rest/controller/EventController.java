@@ -23,9 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventController {
     final EventService eventService;
-    @GetMapping("event")
+    @GetMapping("/event")
     public ResponseEntity<?> getEventLists(@RequestParam(value = "_limit", required = false) Integer perPage, @RequestParam(value = "_page", required = false) Integer page, @RequestParam(value = "title", required = false) String title) {
-        perPage = perPage == null ? 3 : perPage;
+        perPage = perPage == null ? 1 : perPage;
         page = page == null ? 1 : page;
         Page<Event> pageOutput;
         if (title == null) {

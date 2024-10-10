@@ -49,6 +49,12 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         createEvent(org2, "Cultural", "Loy Krathong", "A time for Krathong", "Ping River", "21th Nov", "8.00am-10.00pm.", false, Arrays.asList(parti2, parti3, parti4)); // 3 participants
         createEvent(org3, "Cultural", "Songkran", "Let's Play Water", "Chiang Mai Moat", "13th April", "10.00am-6.00pm.", true, Arrays.asList(parti1, parti3, parti5)); // 3 participants
         addUser();
+        org1.setUser(user1);
+        user1.setOrganizer(org1);
+        org2.setUser(user2);
+        user2.setOrganizer(org2);
+        org3.setUser(user3);
+        user3.setOrganizer(org3);
     }
 
     private void createEvent(Organizer organizer, String category, String title, String description, String location, String date, String time, boolean petAllowed, Iterable<Participant> participants) {
